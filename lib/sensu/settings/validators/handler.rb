@@ -60,6 +60,15 @@ module Sensu
           end
         end
 
+        # Validate extension handler.
+        # Validates: extension
+        #
+        # @param handler [Hash] sensu handler definition.
+        def validate_extension_handler(handler)
+          must_be_a_string(handler[:extension]) ||
+            invalid(handler, "handler extension must be a string")
+        end
+
         # Validate handler type.
         # Validates: type
         #
@@ -76,6 +85,8 @@ module Sensu
             validate_transport_handler(handler)
           when "set"
             validate_set_handler(handler)
+          when "extension"
+            validate_extension_handler(handler)
           else
             invalid(handler, "unknown handler type")
           end
